@@ -4,7 +4,7 @@ An industry-standard, fully verified digital ASIC implementation of a custom **3
 
 ---
 
-**## 📌 Architecture Overview**
+## 📌 Architecture Overview
 
 The design integrates an open-source 32-bit RISC-V processor core with a custom memory-mapped UART peripheral:
 * **Processor Core:** `PicoRV32` RV32I soft-core executing standard RISC-V machine instructions.
@@ -13,7 +13,7 @@ The design integrates an open-source 32-bit RISC-V processor core with a custom 
 
 ---
 
-**## 🛠️ Project Structure**
+## 🛠️ Project Structure
 
 ```text
 riscv-uart-sky130-soc/
@@ -24,9 +24,9 @@ riscv-uart-sky130-soc/
 ├── config.json            # OpenLane flow configuration parameters
 └── README.md              # Project documentation & verification reports
 
-**⚙️ Design Specifications & Constraints**  
+⚙️ Design Specifications & Constraints
 
-**Parameter                                     Value**
+Parameter                                     Value
 
 Process PDK                                SkyWater 130nm (sky130A)
 Standard Cell Library                      sky130_fd_sc_hd
@@ -37,7 +37,7 @@ Power Distribution                         Core Rings enabled (FP_PDN_CORE_RING:
 
 
 
-**🚀 How to Run the OpenLane Flow**
+🚀 How to Run the OpenLane Flow
 
 **Prerequisites**
 
@@ -62,7 +62,7 @@ docker run --rm \
   sh -c "./flow.tcl -design riscv_uart_soc"
 
 
-**📊 Physical Design & Signoff Results**
+📊 Physical Design & Signoff Results
 
 The physical design pipeline successfully executed all 42 flow stages:
 
@@ -82,7 +82,7 @@ The physical design pipeline successfully executed all 42 flow stages:
 
     LVS (Layout vs. Schematic): Fully verified equivalence
 
-**Signoff Log Verification**
+Signoff Log Verification
 
 [INFO]: Running Magic DRC ...
 [INFO]: No DRC violations after detailed routing.
@@ -91,7 +91,7 @@ The physical design pipeline successfully executed all 42 flow stages:
 [INFO]: There are no hold violations in the design at the typical corner.
 [SUCCESS]: Flow complete.
 
-**📜 License & Acknowledgments**
+📜 License & Acknowledgments
 
 PicoRV32 Core: Designed by Clifford Wolf (YosysHQ) under ISC License.
 
