@@ -12,8 +12,8 @@ The design integrates an open-source 32-bit RISC-V processor core with a custom 
 * **Handshake Protocol:** Zero-wait state memory interface mapping core write operations directly to peripheral transmit control registers.
 
 ---
-**
-## 🛠️ Project Structure**
+
+**## 🛠️ Project Structure**
 
 ```text
 riscv-uart-sky130-soc/
@@ -24,11 +24,9 @@ riscv-uart-sky130-soc/
 ├── config.json            # OpenLane flow configuration parameters
 └── README.md              # Project documentation & verification reports
 
-**
-⚙️ Design Specifications & Constraints**  
+**⚙️ Design Specifications & Constraints**  
 
-**
-Parameter                                     Value**
+**Parameter                                     Value**
 
 Process PDK                                SkyWater 130nm (sky130A)
 Standard Cell Library                      sky130_fd_sc_hd
@@ -64,8 +62,8 @@ docker run --rm \
   sh -c "./flow.tcl -design riscv_uart_soc"
 
 
-**📊 Physical Design & Signoff Results
-**
+**📊 Physical Design & Signoff Results**
+
 The physical design pipeline successfully executed all 42 flow stages:
 
 1.Synthesis (Yosys): Mapped behavioral Verilog logic to standard cell netlist.
@@ -93,8 +91,8 @@ The physical design pipeline successfully executed all 42 flow stages:
 [INFO]: There are no hold violations in the design at the typical corner.
 [SUCCESS]: Flow complete.
 
-**📜 License & Acknowledgments
-**
+**📜 License & Acknowledgments**
+
 PicoRV32 Core: Designed by Clifford Wolf (YosysHQ) under ISC License.
 
 SkyWater 130nm PDK: Open-source PDK released by Google & SkyWater.
