@@ -13,7 +13,7 @@ on:
 
 env:
   DESIGN: riscv_uart_soc
-  OPENLANE_REF: 86f34b3484a1709e9058c6bfa4b1bc49aeae8335   # OpenLane v1 master, pinned
+  OPENLANE_REF: e73fb3c57e687a0023fcd4dcfd1566ecd478362a   # newest OpenLane v1 commit with a published image
 
 jobs:
   harden:
