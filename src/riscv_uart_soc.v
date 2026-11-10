@@ -113,7 +113,12 @@ module riscv_uart_soc #(
         .mem_wdata (mem_wdata),
         .mem_wstrb (mem_wstrb),
         .mem_rdata (mem_rdata),
-        .irq       (32'd0    )
+        .irq       (32'd0    ),
+        // Co-processor interface unused (ENABLE_PCPI = 0): tie inputs low
+        .pcpi_wr   (1'b0     ),
+        .pcpi_rd   (32'd0    ),
+        .pcpi_wait (1'b0     ),
+        .pcpi_ready(1'b0     )
     );
 
     // ------------------------------------------------------------------
