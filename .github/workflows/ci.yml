@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Icarus Verilog and Yosys
+        run: sudo apt-get update && sudo apt-get install -y iverilog yosys
+      - name: Boot ROM is up to date
+        run: python3 firmware/gen_rom.py && git diff --exit-code src/boot_rom.v
+      - name: Simulate (self-checking testbench)
+        run: make sim
+      - name: Generic synthesis check
+        run: make synth
