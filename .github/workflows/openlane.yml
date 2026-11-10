@@ -67,6 +67,7 @@ jobs:
             runs/ci/final
             runs/ci/*/*.log
             runs/ci/*/*.rpt
+            runs/ci/*/*/*.rpt
             runs/ci/*/reports
             runs/ci/flow.log
             runs/ci/error.log
