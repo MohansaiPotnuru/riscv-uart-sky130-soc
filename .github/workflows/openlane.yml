@@ -9,6 +9,7 @@ on:
     paths:
       - "src/**"
       - "config.json"
+      - "constraints/**"
       - ".github/workflows/openlane.yml"
 
 env:
@@ -39,7 +40,7 @@ jobs:
         run: |
           D="$HOME/OpenLane/designs/$DESIGN"
           mkdir -p "$D"
-          cp -r config.json src "$D/"
+          cp -r config.json src constraints "$D/"
           cd "$HOME/OpenLane" && make test TEST_DESIGN="$DESIGN"
           test -f "$D/runs/openlane_test/results/final/gds/$DESIGN.gds"
 
