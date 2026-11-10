@@ -85,8 +85,8 @@ riscv-uart-sky130-soc/
 |---|---|
 | PDK / standard cells | `sky130A` / `sky130_fd_sc_hd` |
 | Clock | 25 ns (40 MHz) on `clk` |
-| Die area | 350 µm × 350 µm (absolute sizing) |
-| Placement density | 0.45 |
+| Die area | 500 µm × 500 µm (absolute sizing) |
+| Placement density | 0.50 |
 | PDN | Core ring enabled, design hardened as a core |
 | UART | 115200 baud, `CLKS_PER_BIT = 40 MHz / 115200 = 347` |
 | CPU options | No counters, no barrel shifter, no MUL/DIV, no compressed ISA (to save area) |
