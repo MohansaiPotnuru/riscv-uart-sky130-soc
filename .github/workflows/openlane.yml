@@ -1,0 +1,77 @@
+name: OpenLane (RTL to GDSII)
+
+# Full SKY130 hardening: synthesis, floorplan/PDN, placement, CTS, routing,
+# Magic/KLayout DRC, LVS and STA. Takes a while, so it runs only when the
+# hardware or its configuration changes, or on demand.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/**"
+      - "config.json"
+      - ".github/workflows/openlane.yml"
+
+env:
+  DESIGN: riscv_uart_soc
+  OPENLANE_REF: 86f34b3484a1709e9058c6bfa4b1bc49aeae8335   # OpenLane v1 master, pinned
+
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Free disk space for the OpenLane image and PDK
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: Fetch OpenLane
+        run: |
+          git clone --filter=blob:none https://github.com/The-OpenROAD-Project/OpenLane.git "$HOME/OpenLane"
+          git -C "$HOME/OpenLane" checkout --quiet "$OPENLANE_REF"
+
+      - name: Pull OpenLane image and install sky130A PDK
+        run: cd "$HOME/OpenLane" && make
+
+      - name: Run the flow
+        run: |
+          D="$HOME/OpenLane/designs/$DESIGN"
+          mkdir -p "$D"
+          cp -r config.json src "$D/"
+          cd "$HOME/OpenLane" && make test TEST_DESIGN="$DESIGN"
+          test -f "$D/runs/openlane_test/results/final/gds/$DESIGN.gds"
+
+      - name: Summarise signoff metrics
+        if: always()
+        run: |
+          R="$HOME/OpenLane/designs/$DESIGN/runs/openlane_test"
+          M="$R/reports/metrics.csv"
+          [ -f "$M" ] || { echo "No metrics.csv produced" >> "$GITHUB_STEP_SUMMARY"; exit 0; }
+          python3 - "$M" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import csv, sys
+          row = next(csv.DictReader(open(sys.argv[1])))
+          keys = ["DIEAREA_mm^2", "synth_cell_count", "CoreArea_um^2", "OpenDP_Util",
+                  "wns", "tns", "spef_wns", "spef_tns", "suggested_clock_period",
+                  "Magic_violations", "klayout_violations", "pin_antenna_violations",
+                  "net_antenna_violations", "lvs_total_errors", "cvc_total_errors",
+                  "tritonRoute_violations", "wire_length", "vias", "CLOCK_PERIOD"]
+          print("### OpenLane signoff metrics\n\n| Metric | Value |\n|---|---|")
+          for k in keys:
+              if k in row:
+                  print(f"| `{k}` | {row[k]} |")
+          PY
+          cp "$M" metrics.csv
+
+      - name: Upload GDS, reports and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openlane-${{ env.DESIGN }}
+          path: |
+            ~/OpenLane/designs/${{ env.DESIGN }}/runs/openlane_test/results/final
+            ~/OpenLane/designs/${{ env.DESIGN }}/runs/openlane_test/reports
+            ~/OpenLane/designs/${{ env.DESIGN }}/runs/openlane_test/logs
+            ~/OpenLane/designs/${{ env.DESIGN }}/runs/openlane_test/openlane.log
+          if-no-files-found: warn
