@@ -32,7 +32,9 @@
     "CTS_SINK_CLUSTERING_SIZE": 8,
     "GRT_DESIGN_REPAIR_MAX_CAP_PCT": 30,
     "EXTRA_EXCLUDED_CELLS": [
-        "sky130_fd_sc_hd__buf_1"
+        "sky130_fd_sc_hd__buf_1",
+        "sky130_fd_sc_hd__clkbuf_1"
     ],
-    "CTS_DISTANCE_BETWEEN_BUFFERS": 60
+    "CTS_DISTANCE_BETWEEN_BUFFERS": 60,
+    "PNR_SDC_FILE": "dir::constraints/pnr.sdc"
 }
