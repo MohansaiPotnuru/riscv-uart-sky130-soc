@@ -22,7 +22,7 @@
     "PL_TARGET_DENSITY_PCT": 50,
     "PDN_MULTILAYER": true,
     "PDN_CORE_RING": true,
-    "DESIGN_REPAIR_MAX_WIRE_LENGTH": 300,
+    "DESIGN_REPAIR_MAX_WIRE_LENGTH": 200,
     "DESIGN_REPAIR_MAX_SLEW_PCT": 50,
     "DESIGN_REPAIR_MAX_CAP_PCT": 30,
     "RUN_POST_GRT_DESIGN_REPAIR": true,
@@ -33,8 +33,11 @@
     "GRT_DESIGN_REPAIR_MAX_CAP_PCT": 30,
     "EXTRA_EXCLUDED_CELLS": [
         "sky130_fd_sc_hd__buf_1",
-        "sky130_fd_sc_hd__clkbuf_1"
+        "sky130_fd_sc_hd__clkbuf_1",
+        "sky130_fd_sc_hd__clkbuf_2"
     ],
     "CTS_DISTANCE_BETWEEN_BUFFERS": 60,
-    "PNR_SDC_FILE": "dir::constraints/pnr.sdc"
+    "PNR_SDC_FILE": "dir::constraints/pnr.sdc",
+    "SIGNOFF_SDC_FILE": "dir::constraints/signoff.sdc",
+    "GRT_DESIGN_REPAIR_MAX_WIRE_LENGTH": 200
 }
