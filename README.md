@@ -129,17 +129,40 @@ The results go to `designs/riscv_uart_soc/runs/run1/`. The final GDS is in `resu
 
 ## Physical design results
 
-I ran the earlier revision of this design (same CPU, UART and floorplan, but no boot ROM) through the complete OpenLane flow: Yosys synthesis, floorplan and PDN, placement, CTS, global/detailed routing, then Magic/KLayout signoff. The final report said:
+The current revision (v2, with the boot ROM) was hardened end to end by the [OpenLane workflow](.github/workflows/openlane.yml) in GitHub Actions ([run 42860013316](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/runs/42860013316), OpenLane v1 at `e73fb3c`, sky130A, about 13 minutes of flow time). The final GDS, reports and logs are attached to that run as the `openlane-riscv_uart_soc` artifact.
 
 ```text
-[INFO]: No DRC violations after detailed routing.
-[INFO]: No DRC violations after GDS streaming out.
-[INFO]: There are no setup violations in the design at the typical corner.
-[INFO]: There are no hold violations in the design at the typical corner.
+[INFO]: No Magic DRC violations after detailed routing.
+[INFO]: No Magic DRC violations after GDS streaming out.
+[INFO]: No KLayout DRC violations after GDS streaming out.
+[INFO]: No XOR differences between KLayout and Magic gds.
+[INFO]: There are no setup violations in the design at the Typical corner.
+[INFO]: There are no hold violations in the design at the Typical corner.
 [SUCCESS]: Flow complete.
 ```
 
-LVS also passed. The current revision adds a 64-word combinational ROM, a UART status register and the corrected baud divisor. Re-run the flow to get updated area and timing numbers before quoting them.
+| Metric | Value |
+|---|---|
+| Die area | 500 µm × 500 µm (0.25 mm²) |
+| Core area | 232,536 µm² |
+| Synthesised cells | 8,038 |
+| Core utilisation / placement density | 50 % / 0.5 |
+| Clock | 25 ns (40 MHz) |
+| Setup WNS / TNS (post-route, extracted parasitics) | 0.00 ns / 0.00 ns |
+| Worst setup slack / worst hold slack | 13.79 ns / 0.12 ns |
+| DRC (Magic / KLayout / TritonRoute) | 0 / 0 / 0 |
+| LVS errors | 0 |
+| Wire length / vias | 407,594 µm / 72,767 |
+
+### Known warnings
+
+- **Antenna:** 11 pin and 10 net antenna violations remain. They do not stop the flow but would need diode insertion or jumpers before a real tapeout.
+- **Max fanout:** 102 nets exceed the default fanout limit at every corner.
+- **Max slew:** 2 violations at the typical corner, 81 at the slow corner, none at the fast corner.
+
+Timing closes at 40 MHz with large setup margin. The slew and fanout warnings are the next thing to fix, for example by enabling more aggressive buffering in resizer or lowering placement density.
+
+The v1 revision (no boot ROM) was hardened earlier on a smaller die. The boot ROM pushed placement utilisation to 82 % on that die and placement failed, which is why the die is now 500 µm × 500 µm.
 
 > Note: this is a hardened layout (GDSII) produced by an open-source flow. It has not been fabricated.
 
