@@ -6,24 +6,20 @@
         "dir::src/uart_tx.v",
         "dir::src/riscv_uart_soc.v"
     ],
-    "SYNTH_DEFINES": [
-        "SYNTHESIS"
-    ],
+    "VERILOG_DEFINES": ["SYNTHESIS"],
     "CLOCK_PORT": "clk",
     "CLOCK_NET": "clk",
     "CLOCK_PERIOD": 25.0,
     "FP_SIZING": "absolute",
-    "DIE_AREA": "0 0 500.0 500.0",
-    "PL_TARGET_DENSITY": 0.5,
-    "FP_PDN_MULTILAYER": true,
-    "FP_PDN_CORE_RING": true,
-    "CTS_SINK_CLUSTERING_SIZE": 10,
-    "PL_RESIZER_MAX_WIRE_LENGTH": 200,
-    "PL_RESIZER_MAX_SLEW_MARGIN": 50,
-    "PL_RESIZER_MAX_CAP_MARGIN": 30,
-    "GLB_RESIZER_MAX_SLEW_MARGIN": 50,
-    "GLB_RESIZER_MAX_CAP_MARGIN": 30,
-    "GRT_ANT_MARGIN": 50,
-    "GRT_MAX_DIODE_INS_ITERS": 5,
-    "PNR_SDC_FILE": "dir::constraints/pnr.sdc"
+    "DIE_AREA": [0, 0, 500, 500],
+    "PL_TARGET_DENSITY_PCT": 50,
+    "PDN_MULTILAYER": true,
+    "PDN_CORE_RING": true,
+    "DESIGN_REPAIR_MAX_WIRE_LENGTH": 300,
+    "DESIGN_REPAIR_MAX_SLEW_PCT": 30,
+    "DESIGN_REPAIR_MAX_CAP_PCT": 30,
+    "RUN_POST_GRT_DESIGN_REPAIR": true,
+    "GRT_DESIGN_REPAIR_MAX_SLEW_PCT": 30,
+    "GRT_ANTENNA_REPAIR_MARGIN": 20,
+    "DRT_ANTENNA_REPAIR_ITERS": 5
 }
