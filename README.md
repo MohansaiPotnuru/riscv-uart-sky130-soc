@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/workflows/ci.yml/badge.svg)](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/workflows/ci.yml)
 [![LibreLane](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/workflows/openlane.yml/badge.svg)](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/workflows/openlane.yml)
+[![Release](https://img.shields.io/github/v/release/MohansaiPotnuru/riscv-uart-sky130-soc)](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A small 32-bit RISC-V system-on-chip, taken from RTL to GDSII with **[LibreLane](https://github.com/librelane/librelane)** (the maintained successor to OpenLane 2) on the open-source **SkyWater SKY130A** PDK. It has:
 
@@ -79,6 +81,7 @@ riscv-uart-sky130-soc/
 │   ├── pnr.sdc              # Place-and-route SDC (tighter fanout/transition targets)
 │   └── signoff.sdc          # Signoff SDC (LibreLane defaults)
 ├── config.json              # LibreLane design configuration
+├── LICENSE                  # MIT (src/picorv32.v stays ISC)
 ├── Makefile                 # sim / wave / lint / synth helpers
 └── .github/workflows/
     ├── ci.yml               # Simulation and Yosys synthesis on every push
@@ -132,7 +135,7 @@ The results go to `runs/<tag>/`. The final GDS is in `final/gds/`, all signoff m
 
 ## Physical design results
 
-The current revision (v2, with the boot ROM) was hardened end to end in GitHub Actions ([run 42943552409](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/runs/42943552409), LibreLane 3.0.17, sky130A, about 20 minutes). The final GDS, metrics and reports are attached to that run as the `librelane-riscv_uart_soc` artifact. Every signoff check passed with no warnings:
+The current revision (v2, with the boot ROM) was hardened end to end in GitHub Actions ([run 42943552409](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/actions/runs/42943552409), LibreLane 3.0.17, sky130A, about 20 minutes). The final GDS, `metrics.json` and signoff reports (per-corner STA, DRC, LVS and antenna) are attached to the [v2.1 release](https://github.com/MohansaiPotnuru/riscv-uart-sky130-soc/releases/tag/v2.1). Every signoff check passed with no warnings:
 
 ```text
 Check for Routing DRC errors clear.
@@ -179,6 +182,8 @@ The first hardening of v2 used OpenLane v1. It met timing and was DRC/LVS clean,
 - **v1** – Initial PicoRV32 + UART integration, hardened with OpenLane.
 
 ## Acknowledgements and licences
+
+This project is released under the [MIT licence](LICENSE), except `src/picorv32.v`, which keeps its original ISC licence.
 
 - **PicoRV32** © Claire Xenia Wolf, ISC licence (see the header of `src/picorv32.v`).
 - **SkyWater SKY130 PDK** – open-source PDK by Google and SkyWater Technology.

@@ -1,4 +1,4 @@
-# Simulation / lint helpers. The ASIC flow itself runs inside OpenLane (see README).
+# Simulation / lint helpers. The ASIC flow itself runs with LibreLane (see README).
 SRC := src/picorv32.v src/boot_rom.v src/uart_tx.v src/riscv_uart_soc.v
 TB  := tb/tb_riscv_uart_soc.v
 
